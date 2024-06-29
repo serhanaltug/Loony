@@ -1,0 +1,41 @@
+﻿@model ListViewModel<Loony.Data.Entities.Product.Accessory>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+<table class="table m-table m-table--head-separator-primary table-hover dataTable">
+    <thead>
+        <tr>
+            <table-head width="15%" sortby="AccessoryCode" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("AccessoryCode")</table-head>
+            <table-head width="30%" sortby="AccessoryType" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("AccessoryType")</table-head>
+            <table-head width="40%" sortby="AccessoryName" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("AccessoryName")</table-head>
+            <th style="width: 15%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var accessory in Model.Data)
+        {
+        <tr>
+            <td class="align-middle">@accessory.AccessoryCode.ToString().PadLeft(4,'0')</td>
+            <td class="align-middle">@accessory.AccessoryType.AccessoryTypeName</td>
+            <td class="align-middle">@accessory.AccessoryName</td>
+            <td class="text-right align-middle">
+                @if (Convert.ToBoolean(Context.Items["Update"]))
+                {
+                    <a asp-action="Edit" asp-route-id="@accessory.Id" class="btn btn-secondary btn-sm"><i class="la la-edit"></i> @await (Component.StaticText("Edit"))</a>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<div page-data="@Model.Page"></div>
+

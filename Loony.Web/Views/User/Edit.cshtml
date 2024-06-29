@@ -1,0 +1,198 @@
+﻿@model Loony.Data.Entities.System.User
+
+@{
+    ViewData["Title"] = await Component.StaticText("Users");
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">@await Component.StaticText("UserDetails")</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a asp-controller="Home" asp-action="Index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a asp-controller="User" asp-action="Index" class="m-nav__link">
+                        <span class="m-nav__link-text">@await Component.StaticText("Users")</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    @if (!String.IsNullOrEmpty(TempData["Message"]?.ToString()))
+    {
+        <message id="SaveMessage">@await Component.StaticText(TempData["Message"]?.ToString())</message>
+    }
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="m-portlet m-portlet--full-height  ">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile">
+                        <div class="m-card-profile__title m--hide">
+                            @await Component.StaticText("UserDetails")
+                        </div>
+                        <div class="m-card-profile__pic">
+                            <div class="m-card-profile__pic-wrapper">
+                                <a asp-action="LoginAs" asp-controller="Account" asp-route-id="@Model.Id" asp-route-token="@ViewBag.Token" onclick="return confirm('@await Component.StaticText("msgLoginAs")');">
+                                    <img src="~/Home/Avatar/@Model.Id" class="m--img-rounded m--marginless m--img-centered" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="m-card-profile__details">
+                            <span class="m-card-profile__name">@Model.FullName</span>
+                            <a href="mailto:@Model.Email" class="m-card-profile__email m-link">@Model.Email</a>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body-separator"></div>
+                    <div class="m-widget1 m-widget1--paddingless">
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">@await Component.StaticText("Hit")</h3>
+                                    <span class="m-widget1__desc">@await Component.StaticText("MemberHasLoggedIn")</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__title">@Model.Hit</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">@await Component.StaticText("LastLoginDate")</h3>
+                                    <span class="m-widget1__desc">@await Component.StaticText("MemberLastActiveOn")</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__title">@Model.LastLoginDate.ToShortDateString()</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                        <li class="m-nav__section m--hide">
+                            <span class="m-nav__section-text">Section</span>
+                        </li>
+                        <li class="m-nav__item">
+                            @if (Convert.ToBoolean(Context.Items["Delete"]) && User.Id() != Model.Id)
+                            {
+                                <a asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('@await Component.StaticText("msgDelete")');" class="m-nav__link">
+                                    <i class="m-nav__link-icon flaticon-close"></i>
+                                    <span class="m-nav__link-text">@await Component.StaticText("DeleteUser")</span>
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="m-portlet m-portlet--full-height m-portlet--tabs">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--left m-tabs-line--primary" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#general" role="tab">
+                                    <i class="flaticon-share m--hide"></i>
+                                    @await Component.StaticText("UserDetails")
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#accessrights" role="tab" data-url="@Url.Action("_AccessRights", new { id = Model.Id })">
+                                    @await Component.StaticText("AccessRights")
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#userrights" role="tab">
+                                    @await Component.StaticText("UserRights")
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#files" role="tab" data-url="@Url.Action("_Files", new { id = Model.Id })">
+                                    @await Component.StaticText("Files")
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="general">
+                        <partial name="_UserDetails" />
+                    </div>
+                    <div class="tab-pane " id="accessrights">
+                        <div class="m-portlet__body">
+                            <div class="m-loader" style="width: 30px; display: inline-block;"></div> @await Component.StaticText("Loading")
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="userrights">
+                        <div class="m-portlet__body">
+                            <div class="m-loader" style="width: 30px; display: inline-block;"></div> @await Component.StaticText("Loading") 
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="files">
+                        <div class="m-portlet__body">
+                            <div class="m-loader" style="width: 30px; display: inline-block;"></div> @await Component.StaticText("Loading")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @if (TempData["Message"] != null)
+    {
+        <script>
+            $(function () {
+                setTimeout(() => {
+                    $('#SaveMessage').hide();
+                }, 2000);
+            });
+        </script>
+    }
+    <script type="text/javascript" src="/js/inputMask.js"></script>
+    <script type="text/javascript" src="/js/navTabsAjax.js"></script>
+
+    <script type="text/javascript" src="/js/Translate.js"></script>
+    <script>
+        $("#accessrights").on('change', 'input', function () {
+
+            var userId = $("#UserId").val();
+            var menuId = $(this).attr('data-id');
+            var accessType = $(this).attr('data-type');
+            var accessRight = false;
+
+            if (this.checked)
+                accessRight = true;
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("_ChangeAccessRight")',
+                data: { userId, menuId, accessType, accessRight },
+                cache: false,
+                success: function () {
+                    toastr.info(Translate('msgSaved'));
+                },
+                error: function () {
+                    toastr.error(Translate('msgSaveError'));
+                }
+            });
+
+        });
+
+    </script>
+}

@@ -1,0 +1,69 @@
+﻿@model Loony.Web.Models.ProductViewModel
+
+<form class="m-form m-form--fit m-form--label-align-right" asp-action="Edit" enctype="multipart/form-data" method="post">
+    <div class="m-portlet__body">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Product.Id" />
+
+        <div class="form-group m-form__group row">
+            <label class="col-2 col-form-label">@await Component.StaticText("ProductName")</label>
+            <div class="col-7">
+                <input type="text" asp-for="Product.ProductName" class="form-control m-input">
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-2 col-form-label">@await Component.StaticText("ProductCode")</label>
+            <div class="col-7">
+                <input type="text" asp-for="Product.ProductCode" class="form-control m-input">
+                <span asp-validation-for="Product.ProductCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-2 col-form-label">@await Component.StaticText("Year")</label>
+            <div class="col-7">
+                <input type="text" asp-for="Product.Year" class="form-control m-input">
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-2 col-form-label">@await Component.StaticText("Season")</label>
+            <div class="col-7">
+                <select asp-for="Product.Season" class="form-control kt-selectpicker">
+                    <option value="Summer">Summer</option>
+                    <option value="Winter">Winter</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-2 col-form-label">@await Component.StaticText("ProductGroup")</label>
+            <div class="col-7">
+                <select asp-for="Product.ProductGroupId" asp-items="Model.ProductGroupSelectList" class="form-control m-input">
+                    <option value="">@await Component.StaticText("PleaseSelect")</option>
+                </select>
+            </div>
+        </div>
+        <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+        <div class="form-group m-form__group row">
+            <label class="col-2 col-form-label">@await Component.StaticText("Description")</label>
+            <div class="col-7">
+                <textarea asp-for="Product.Description" class="form-control m-input" rows="3" cols="60"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions">
+            <div class="row">
+                <div class="col-2">
+                </div>
+                <div class="col-7">
+                    @if (Convert.ToBoolean(Context.Items["Update"]))
+                    {
+                        <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">@await Component.StaticText("SaveChanges")</button>
+                    }
+                    &nbsp; &nbsp;
+                    <a asp-action="Index" class="btn btn-secondary m-btn m-btn--air m-btn--custom">@await Component.StaticText("Cancel")</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

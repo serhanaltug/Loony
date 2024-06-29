@@ -1,0 +1,69 @@
+﻿@model ListViewModel<Loony.Data.Entities.Product.CareInstruction>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+<table class="table m-table m-table--head-separator-primary table-hover dataTable">
+    <thead>
+        <tr>
+            <table-head width="15%" sortby="Id" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("CareInstructionImage")</table-head>
+            <table-head width="20%" sortby="Group" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Group")</table-head>
+            <table-head width="20%" sortby="Name" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("CareInstructionName")</table-head>
+            <table-head width="35%" sortby="Description" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Description")</table-head>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <tr id="New" style="display:none; background-color: #efefef;">
+        <td colspan="5">
+            <form class="form m-form" asp-action="New" enctype="multipart/form-data" method="post">
+                @Html.AntiForgeryToken()
+                <table class="table table-borderless table-sm m-table" style="margin:0px;">
+                    <tr style="background-color: #efefef;">
+                        <td class="align-middle">
+                            <div class="custom-file">
+                                <input type="file" name="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">@await Component.StaticText("ChooseFile")</label>
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            <select name="Group" class="dropdown form-control kt-selectpicker">
+                                <option value="Washing / Yıkama">Washing / Yıkama</option>
+                                <option value="Bleaching / Ağartma">Bleaching / Ağartma</option>
+                                <option value="Drying / Kurutma">Drying / Kurutma</option>
+                                <option value="Wring / Sıkma">Wring / Sıkma</option>
+                                <option value="Ironing / Ütüleme">Ironing / Ütüleme</option>
+                                <option value="DryCleaning / KuruTemizleme">DryCleaning / KuruTemizleme</option>
+                            </select>
+                        </td>
+                        <td class="align-middle"><input type="text" name="Name" class="form-control m-input" placeholder="Name"></td>
+                        <td class="align-middle"><input type="text" name="Description" class="form-control m-input" placeholder="Description"></td>
+                        <td class="text-right align-middle">
+                            @if (Convert.ToBoolean(Context.Items["Create"]))
+                            {
+                                <button type="submit" class="btn btn-secondary btn-sm" title="@await Component.StaticText("Save")"><i class="la la-save"></i></button>
+                                <a asp-action="Index" class="btn btn-secondary btn-sm" title="@await Component.StaticText("Cancel")"><i class="la la-times-circle"></i></a>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+
+    @foreach (var CareInstructions in Model.Data)
+    {
+        <partial name="_Row" model="@CareInstructions" />
+    }
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<div page-data="@Model.Page"></div>

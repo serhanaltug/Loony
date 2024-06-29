@@ -1,0 +1,50 @@
+﻿@model ListViewModel<Loony.Data.Entities.System.User>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+<table class="table m-table m-table--head-separator-primary table-hover dataTable">
+    <thead>
+        <tr>
+            <th style="width: 5%"></th>
+            <table-head width="20%" sortby="FirstName" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Name")</table-head>
+            <table-head width="20%" sortby="Email" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Email")</table-head>
+            <table-head width="10%" sortby="IsAdmin" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Admin")</table-head>
+            <table-head width="15%" sortby="IsSuperUser" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("SuperUser")</table-head>
+            <table-head width="10%" sortby="Hit" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Hit")</table-head>
+            <table-head width="15%" sortby="LastLoginDate" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("LastLoginDate")</table-head>
+            <th style="width: 5%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Data)
+        {
+        <tr>
+            <td class="align-middle">
+                <img src="~/Home/Avatar/@user.Id" class="m--img-rounded m--marginless m--img-centered" />
+            </td>
+            <td class="align-middle"><a asp-action="Edit" asp-route-id="@user.Id">@user.FullName</a></td>
+            <td class="align-middle">@user.Email</td>
+            <td class="align-middle">@if (user.IsAdmin) {<i class="fa fa-check"></i> }</td>
+            <td class="align-middle">@if (user.IsSuperUser) {<i class="fa fa-check"></i> }</td>
+            <td class="align-middle">@user.Hit</td>
+            <td class="align-middle">@user.LastLoginDate.ToString("yyyy.MM.dd")</td>
+            <td class="text-right align-middle">
+                @if (Convert.ToBoolean(Context.Items["Update"]))
+                {
+                    <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-secondary btn-sm"><i class="la la-edit"></i> @await (Component.StaticText("Edit"))</a>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<div page-data="@Model.Page"></div>

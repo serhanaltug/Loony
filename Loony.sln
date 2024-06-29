@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loony.Data", "Loony.Data\Loony.Data.csproj", "{6532E102-E363-43A2-A18E-AF8C5AF19F7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loony.Tools", "Loony.Tools\Loony.Tools.csproj", "{CD60D6EC-B2CE-46C1-8D0E-0EF15901EB87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loony.Web", "Loony.Web\Loony.Web.csproj", "{31C8CDC4-2872-45AF-98B8-AE46EEE225B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6532E102-E363-43A2-A18E-AF8C5AF19F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6532E102-E363-43A2-A18E-AF8C5AF19F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6532E102-E363-43A2-A18E-AF8C5AF19F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6532E102-E363-43A2-A18E-AF8C5AF19F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD60D6EC-B2CE-46C1-8D0E-0EF15901EB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD60D6EC-B2CE-46C1-8D0E-0EF15901EB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD60D6EC-B2CE-46C1-8D0E-0EF15901EB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD60D6EC-B2CE-46C1-8D0E-0EF15901EB87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31C8CDC4-2872-45AF-98B8-AE46EEE225B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31C8CDC4-2872-45AF-98B8-AE46EEE225B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31C8CDC4-2872-45AF-98B8-AE46EEE225B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31C8CDC4-2872-45AF-98B8-AE46EEE225B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

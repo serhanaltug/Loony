@@ -1,0 +1,36 @@
+﻿@model ListViewModel<Loony.Data.Entities.Product.Accessory>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+    <div class="col-12">
+        <div class="row recent-work">
+            @foreach (var accessory in Model.Data)
+            {
+            <div class="col-md-3 col-sm-6 col-xs-12 margin-bottom-20" style="display: block; opacity: 1; ">
+                <div class="recent-work-item">
+                    @if (Convert.ToBoolean(Context.Items["Update"]))
+                    {
+                        <a asp-action="Edit" asp-route-id="@accessory.Id">
+                            <img id="@accessory.Id" class="img-responsive" src="~/Home/Thumbnail?id=@accessory.Id&table=Product.Accessory" style="max-width:100%; border-style:solid; border-color:lightgray; border-width:1px;">
+                        </a>
+                    }
+                    else
+                    {
+                        <img id="@accessory.Id" class="img-responsive" src="~/Home/Image?id=@accessory.Id&table=Product.Accessory" style="max-width:100%; border-style:solid; border-color:lightgray; border-width:1px;">
+                    }
+                    <br />
+                    <a asp-action="Edit" asp-route-id="@accessory.Id">
+                        @accessory.AccessoryCode.ToString().PadLeft(4, '0') - @accessory.AccessoryName
+                    </a>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+<div page-data="@Model.Page"></div>

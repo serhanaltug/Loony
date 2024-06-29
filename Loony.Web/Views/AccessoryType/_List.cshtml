@@ -1,0 +1,51 @@
+﻿@model ListViewModel<Loony.Data.Entities.Product.AccessoryType>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+<table class="table m-table m-table--head-separator-primary table-hover dataTable">
+    <thead>
+        <tr>
+            <table-head width="10%" sortby="Id" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">Id</table-head>
+            <table-head width="80%" sortby="AccessoryTypeName" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("AccessoryTypeName")</table-head>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <tr id="New" style="display:none; background-color: #efefef;">
+        <td colspan="3">
+            <form class="form m-form" asp-action="New" enctype="multipart/form-data" method="post">
+                @Html.AntiForgeryToken()
+                <table class="table table-borderless table-sm m-table" style="margin:0px;">
+                    <tr style="background-color: #efefef;">
+                        <td class="align-middle" width="10%"> </td>
+                        <td class="align-middle"><input type="text" name="AccessoryTypeName" class="form-control m-input" placeholder="@await Component.StaticText("AccessoryTypeName")"></td>
+                        <td class="text-right align-middle">
+                            @if (Convert.ToBoolean(Context.Items["Create"]))
+                            {
+                                <button type="submit" class="btn btn-secondary btn-sm" title="@await Component.StaticText("Save")"><i class="la la-save"></i></button>
+                                <a asp-action="Index" class="btn btn-secondary btn-sm" title="@await Component.StaticText("Cancel")"><i class="la la-times-circle"></i></a>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+
+    @foreach (var AccessoryTypes in Model.Data)
+    {
+        <partial name="_Row" model="@AccessoryTypes" />
+    }
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<div page-data="@Model.Page"></div>

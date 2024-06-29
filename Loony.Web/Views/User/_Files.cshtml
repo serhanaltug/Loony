@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Loony.Data.Entities.System.File>
+
+<div class="m-portlet__body" id="userFiles">
+
+    <!-- data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" -->
+    <form data-ajax="true" data-ajax-mode="replace" data-ajax-update="#userFiles" class="m-form m-form--fit m-form--label-align-right" asp-action="UploadFile" asp-route-id="@ViewContext.RouteData.Values["id"]" enctype="multipart/form-data" method="post">
+        <div class="m-portlet__body">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group m-form__group row">
+                <label class="col-2 col-form-label">@await Component.StaticText("File")</label>
+                <div class="col-7">
+                    <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">@await Component.StaticText("ChooseFile")</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">@await Component.StaticText("Upload")</button>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+    </form>
+    <hr />
+
+
+    @if (!Model.Any())
+    {
+        <h4>@await Component.StaticText("NoFile")</h4>
+    }
+    else
+    {
+        <table class="table m-table m-table--head-separator-primary table-hover dataTable">
+            <thead>
+                <tr>
+                    <th>@await (Component.StaticText("FileName"))</th>
+                    <th style="width:15%" class="text-center">@await (Component.StaticText("MimeType"))</th>
+                    <th style="width:15%" class="text-center">@await (Component.StaticText("FileDate"))</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><a asp-controller="User" asp-action="File" asp-route-id="@item.Id">@item.FileName</a></td>
+                        <td>@item.MIMEType</td>
+                        <td>@item.CreationDate.Value.ToString("dd MMMM yyyy")</td>
+                        <td class="text-right">
+                            <a asp-action="DeleteFile" asp-route-userId="@item.RelatedGuid" asp-route-fileId="@item.Id" onclick="return confirm('@await Component.StaticText("msgDelete")');" class="btn btn-secondary btn-sm btnDelete"><i class="la la-trash"></i></a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
+    }
+</div>

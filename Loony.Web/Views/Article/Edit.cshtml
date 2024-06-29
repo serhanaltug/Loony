@@ -1,0 +1,226 @@
+﻿@model Loony.Web.Models.ArticleViewModel
+
+@{
+    ViewData["Title"] = await Component.StaticText("Articles");
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">@await Component.StaticText("ArticleDetails")</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a asp-controller="Home" asp-action="Index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a asp-controller="Article" asp-action="Index" class="m-nav__link">
+                        <span class="m-nav__link-text">@await Component.StaticText("Articles")</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    @if (!String.IsNullOrEmpty(TempData["Message"]?.ToString()))
+    {
+        <message id="SaveMessage">@await Component.StaticText(TempData["Message"]?.ToString())</message>
+    }
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="m-portlet m-portlet--full-height  ">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile">
+                        <div class="m-card-profile__title m--hide">
+                            @await Component.StaticText("ArticleDetails")
+                        </div>
+                        <div>
+                            <img src="~/Home/Image?id=@Model.Id&table=Product.Article" class="m--marginless m--img-centered img-responsive" style="max-width: 100%; border-style: solid; border-color: lightgray; border-width: 1px;" />
+                        </div>
+                    </div>
+                    <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                        <li class="m-nav__section m--hide">
+                            <span class="m-nav__section-text">Section</span>
+                        </li>
+                        <li class="m-nav__item">
+                            @if (Convert.ToBoolean(Context.Items["Delete"]))
+                            {
+                                <a asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('@await Component.StaticText("msgDelete")');" class="m-nav__link">
+                                    <i class="m-nav__link-icon flaticon-close"></i>
+                                    <span class="m-nav__link-text">@await Component.StaticText("DeleteArticle")</span>
+                                </a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="m-portlet m-portlet--full-height">
+                <form class="m-form m-form--fit m-form--label-align-right" asp-action="Edit" enctype="multipart/form-data" method="post">
+                    <div class="m-portlet__body">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Article.Id" />
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("ArticleName")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="Article.ArticleName" class="form-control m-input">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("ModelCode")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="Article.ArticleCode" class="form-control m-input">
+                                <span asp-validation-for="Article.ArticleCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("DesignCode")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="Article.DesignCode" class="form-control m-input">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("ColorCode")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="Article.ColorCode" class="form-control m-input">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("Supplier")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="Article.Supplier" class="form-control m-input">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("Composition")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="Article.Composition" class="form-control m-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("DesignType")</label>
+                            <div class="col-7">
+                                <select class="form-control m-select2" name="designtypes[]" asp-items="Model.DesignTypeSelectList" id="m_DesignType" multiple></select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("Description")</label>
+                            <div class="col-7">
+                                <textarea asp-for="Article.Description" class="form-control m-input" rows="3" cols="60"></textarea>
+                            </div>
+                        </div>
+                        <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("ArticleImage")</label>
+                            <div class="col-7">
+                                <div class="custom-file">
+                                    <input type="file" name="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">@await Component.StaticText("ChooseFile")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions">
+                            <div class="row">
+                                <div class="col-2">
+                                </div>
+                                <div class="col-7">
+                                    @if (Convert.ToBoolean(Context.Items["Update"]))
+                                    {
+                                        <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">@await Component.StaticText("SaveChanges")</button>
+                                    }
+                                        &nbsp; &nbsp;
+                                        <a asp-action="Index" class="btn btn-secondary m-btn m-btn--air m-btn--custom">@await Component.StaticText("Cancel")</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @if (TempData["Message"] != null)
+    {
+        <script>$(function () {
+                setTimeout(() => {
+                    $('#SaveMessage').hide();
+                }, 2000);
+            });</script>
+    }
+
+    <script>$('#modal').on('show.bs.modal', function (e) {
+            $(this).find('.modal-content').load($(e.relatedTarget).data('remote'));
+        });
+
+        $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
+            $(this).removeData('bs.modal');
+        });
+    </script>
+
+    <script>
+
+        var Select2 = function () {
+            var designtypes = function () {
+
+                $("#m_DesignType").select2({
+                    placeholder: " Search for design types",
+                    tags: true,
+                    allowClear: true,
+                    ajax: {
+                        url: "@Url.Action("DesignTypes")",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: data.items
+                            };
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    },
+                    minimumInputLength: 1,
+                });
+
+            }
+
+            return {
+                init: function () {
+                    designtypes();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            Select2.init();
+        });
+
+    </script>
+
+
+}

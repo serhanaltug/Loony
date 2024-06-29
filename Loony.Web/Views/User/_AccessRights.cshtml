@@ -1,0 +1,189 @@
+﻿@model AccessRightsViewModel
+
+<div class="m-portlet__body">
+    <input type="hidden" id="UserId" value="@Model.UserId" />
+    <table class="table m-table m-table--head-separator-primary table-hover dataTable">
+        <thead>
+            <tr>
+                <th>@await (Component.StaticText("MainMenu"))</th>
+                <th style="width:15%" class="text-center">@await (Component.StaticText("Create"))</th>
+                <th style="width:15%" class="text-center">@await (Component.StaticText("Read"))</th>
+                <th style="width:15%" class="text-center">@await (Component.StaticText("Update"))</th>
+                <th style="width:15%" class="text-center">@await (Component.StaticText("Delete"))</th>
+                <th style="width:15%" class="text-center">@await (Component.StaticText("List"))</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MainMenu.OrderBy(x => x.Order))
+
+            {
+                bool c = false;
+                bool r = false;
+                bool u = false;
+                bool d = false;
+                bool l = false;
+
+
+                if (Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id) != null)
+                {
+                    c = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).Create;
+                    r = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).Read;
+                    u = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).Update;
+                    d = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).Delete;
+                    l = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).List;
+                }
+
+                bool hasChild = false;
+                if (Model.MainMenu.Any(x => x.RelatedId == item.Id)) hasChild = true;
+
+                if (hasChild)
+                {
+                <tr>
+                    <td class="align-middle">@await (Component.StaticText(item.Name))</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@l" data-id="@item.Id" data-type="List" />
+                            <span></span>
+                        </label>
+                    </td>
+                </tr>
+                }
+                else
+                {
+                <tr>
+                    <td>@if(item.RelatedId > 0) { <i class="la la-caret-right"></i> } @await (Component.StaticText(item.Name))</td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@c" data-id="@item.Id" data-type="Create" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@r" data-id="@item.Id" data-type="Read" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@u" data-id="@item.Id" data-type="Update" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@d" data-id="@item.Id" data-type="Delete" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@l" data-id="@item.Id" data-type="List" />
+                            <span></span>
+                        </label>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+    <table class="table m-table m-table--head-separator-primary table-hover dataTable">
+        <thead>
+            <tr>
+                <th>@await (Component.StaticText("AdminMenu"))</th>
+                <th style="width:15%"></th>
+                <th style="width:15%"></th>
+                <th style="width:15%"></th>
+                <th style="width:15%"></th>
+                <th style="width:15%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AdminMenu.OrderBy(x => x.Order))
+
+            {
+                bool c = false;
+                bool r = false;
+                bool u = false;
+                bool d = false;
+                bool l = false;
+
+
+                if (Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id) != null)
+                {
+                    c = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).Create;
+                    r = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).Read;
+                    u = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).Update;
+                    d = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).Delete;
+                    l = Model.UserMenu.FirstOrDefault(x => x.MenuId == item.Id).List;
+                }
+
+                bool hasChild = false;
+                if (Model.AdminMenu.Any(x => x.RelatedId == item.Id)) hasChild = true;
+
+                if (hasChild)
+                {
+                <tr>
+                    <td class="align-middle">@await (Component.StaticText(item.Name))</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@l" data-id="@item.Id" data-type="List" />
+                            <span></span>
+                        </label>
+                    </td>
+                </tr>
+                }
+                else
+                {
+                <tr>
+                    <td>@if(item.RelatedId > 0) { <i class="la la-caret-right"></i> } @await (Component.StaticText(item.Name))</td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@c" data-id="@item.Id" data-type="Create" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@r" data-id="@item.Id" data-type="Read" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@u" data-id="@item.Id" data-type="Update" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@d" data-id="@item.Id" data-type="Delete" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label class="m-checkbox">
+                            <input type="checkbox" checked="@l" data-id="@item.Id" data-type="List" />
+                            <span></span>
+                        </label>
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+</div>

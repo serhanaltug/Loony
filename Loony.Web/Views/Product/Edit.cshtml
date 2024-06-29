@@ -1,0 +1,206 @@
+﻿@model Loony.Web.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = await Component.StaticText("Products");
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">@await Component.StaticText("ProductDetails")</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a asp-controller="Home" asp-action="Index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a asp-controller="Product" asp-action="Index" class="m-nav__link">
+                        <span class="m-nav__link-text">@await Component.StaticText("Products")</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    @if (!String.IsNullOrEmpty(TempData["Message"]?.ToString()))
+    {
+        <message id="SaveMessage">@await Component.StaticText(TempData["Message"]?.ToString())</message>
+    }
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="m-portlet m-portlet--full-height  ">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile">
+                        <div class="m-card-profile__title m--hide">
+                            @await Component.StaticText("ProductDetails")
+                        </div>
+                        <div>
+                            @if (Model.BaseImageId > 0)
+                            {
+                                <img src="~/Home/Image?id=@Model.BaseImageId&table=Product.ProductImage" class="m--marginless m--img-centered img-responsive" style="max-width: 100%; border-style: solid; border-color: lightgray; border-width: 1px;" />
+                            }
+                        </div>
+                    </div>
+                    <div class="m-widget1 m-widget1--paddingless">
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    @foreach (var imageId in Model.Images)
+                                    {
+                                        <a href="javascript:;" data-toggle="modal" data-target="#modal" data-remote="@Url.Action("_Image", new { id = Model.Id , imageid = imageId })"><img src="~/Home/Thumbnail?id=@imageId&table=Product.ProductImage" class="m--marginless m--img-centered" style="height:40px; border-style: solid; border-color: lightgray; border-width: 1px;" /></a>
+                                    }
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal" data-remote="@Url.Action("_Image", new { id = Model.Id })"><i class="la la-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                        <li class="m-nav__section m--hide">
+                            <span class="m-nav__section-text">Section</span>
+                        </li>
+                        @if (Convert.ToBoolean(Context.Items["Delete"]))
+                        {
+                            <li class="m-nav__item">
+                                <a asp-action="Delete" asp-route-id="@Model.Id" onclick="return confirm('@await Component.StaticText("msgDelete")');" class="m-nav__link">
+                                    <i class="m-nav__link-icon flaticon-close"></i> <span class="m-nav__link-text">@await Component.StaticText("DeleteProduct")</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="m-portlet m-portlet--full-height m-portlet--tabs">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--left m-tabs-line--primary" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#productdetails" role="tab">
+                                    <i class="flaticon-share m--hide"></i>
+                                    @await Component.StaticText("ProductDetails")
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#productchain" role="tab" data-url="@Url.Action("_ProductChain", new { id = Model.Id })">
+                                    @await Component.StaticText("ProductChain")
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#productorders" role="tab">
+                                    @await Component.StaticText("ProductOrders")
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="productdetails">
+                        <partial name="_ProductDetails" />
+                    </div>
+                    <div class="tab-pane " id="productchain">
+                        <div class="m-portlet__body">
+                            <div class="m-loader" style="width: 30px; display: inline-block;"></div> @await Component.StaticText("Loading")
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="productorders">
+                        <div class="m-portlet__body">
+                            <div class="m-loader" style="width: 30px; display: inline-block;"></div> @await Component.StaticText("Loading")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <p>
+                    <div class="m-loader" style="width: 30px; display: inline-block;"></div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <style>
+        .table-header {
+            text-align: center;
+            font-weight: 400;
+            font-size: 1.1em;
+        }
+    </style>
+
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript" src="/js/navTabsAjax.js"></script>
+
+    @if (TempData["Message"] != null)
+    {
+        <script>$(function () {
+                setTimeout(() => {
+                    $('#SaveMessage').hide();
+                }, 2000);
+            });</script>
+    }
+
+    <script>$('#modal').on('show.bs.modal', function (e) {
+            $(this).find('.modal-content').load($(e.relatedTarget).data('remote'));
+        });
+
+        $('body').on('hidden.bs.modal', '.modal:not(.modal-cached)', function () {
+            $(this).removeData('bs.modal');
+        });</script>
+
+    <script type="text/javascript" src="/js/Translate.js"></script>
+
+    <script>$('#modal').on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr('action');
+
+            var dataToSend = new FormData(form[0]);
+
+            var fileInput = $('#customFile')[0];
+            var file = fileInput.files[0];
+            dataToSend.append("file", file);
+
+            $.ajax({
+
+                method: "post",
+                url: actionUrl,
+                data: dataToSend,
+
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var newBody = $('.modal-body', data);
+                    $('#modal').find('.modal-body').replaceWith(newBody);
+
+                    var isValid = newBody.find('[name="IsValid"]').val() == 'True';
+                    if (isValid) {
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    toastr.error(Translate('msgSaveError'));
+                }
+
+            });
+        });</script>
+
+}

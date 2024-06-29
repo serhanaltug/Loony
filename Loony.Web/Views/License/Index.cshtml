@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = await Component.StaticText("License");
+    var licenseInfo = Loony.Tools.LicenseManager.LicenseInfo();
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title ">@await Component.StaticText("License")</h3>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="m-portlet">
+                    <div class="m-portlet__body">
+
+
+                        @{
+                            if (Loony.Tools.LicenseManager.CheckActivation())
+                            {
+                                <h4>Your license details</h4>
+                                <hr />
+                                <div>Product Key: @licenseInfo.LicenseId</div>
+                                <div>License Type: @licenseInfo.LicenseType</div>
+                                <div>Expire Date: @licenseInfo.ExpireDate</div>
+                                <div>Registered to: @licenseInfo.CompanyName</div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-info">
+                                    @if (licenseInfo.ExpireDate.IsDate())
+                                    {
+                                        if (Convert.ToDateTime(licenseInfo.ExpireDate) < DateTime.Now)
+                                        {
+                                            <h4>Your license has expired on @Convert.ToDateTime(licenseInfo.ExpireDate).ToString("dd MMMM yyyy")</h4>
+                                        }
+                                        else
+                                        {
+                                            <h4>Please register and activate your application.</h4>
+                                        }
+                                    }
+                                </div>
+
+                                <form method="post" asp-action="Activate">
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                                        <div class="row align-items-center">
+                                            <div class="col-xl-8 order-2 order-xl-1">
+                                                <input type="text" class="form-control m-input disabled" name="LicenseId" value="@licenseInfo.LicenseId">
+                                                <br /><br />
+                                                <textarea name="activationKey" class="form-control m-input"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="submit" class="btn btn-default" value="Activate" />
+                                </form>
+
+                            }
+                        }
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>

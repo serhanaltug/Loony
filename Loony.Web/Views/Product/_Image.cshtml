@@ -1,0 +1,67 @@
+﻿@model ProductImageViewModel
+
+<form class="m-form m-form--fit m-form--label-align-right" asp-action="_Image" enctype="multipart/form-data">
+
+    @Html.AntiForgeryToken()
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">@await Component.StaticText("AddProductImage")</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+        <input type="hidden" asp-for="ProductImage.ProductId" />
+        <input type="hidden" asp-for="ProductImage.Id" />
+        @if (Model.ProductImage.Image != null)
+        {
+            <div class="form-group m-form__group row">
+                <div class="col-12">
+                    <img src="~/Home/Image?id=@Model.ProductImage.Id&table=Product.ProductImage" class="m--marginless m--img-centered img-responsive" style="max-width: 100%; border-style: solid; border-color: lightgray; border-width: 1px;" />
+                </div>
+            </div>
+        }
+        <div class="form-group m-form__group row">
+            <label class="col-3 col-form-label">@await Component.StaticText("ProductImage")</label>
+            <div class="col-9">
+                <div class="custom-file">
+                    <input type="file" name="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">@await Component.StaticText("ChooseFile")</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
+            <label class="col-3 col-form-label">@await Component.StaticText("BaseImage")</label>
+            <div class="col-3">
+                <div class="m-checkbox-inline">
+                    <label name="Base" class="m-checkbox">
+                        <input type="checkbox" asp-for="ProductImage.Base">
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+            <label class="col-3 col-form-label">@await Component.StaticText("Order")</label>
+            <div class="col-3">
+                <input type="number" class="form-control m-input" asp-for="ProductImage.Order">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-3">
+                @if (Model.ProductImage.Image != null)
+                {
+                    <a class="btn btn-danger m-btn m-btn--air m-btn--custom pull-left" asp-action="_DeleteImage" asp-route-imageid="@Model.ProductImage.Id" asp-route-id="@Model.ProductImage.ProductId" onclick="return confirm('@await Component.StaticText("msgDelete")');">@await Component.StaticText("DeleteRecord")</a>
+                }
+                </div>
+                <div class="col-9 text-right">
+                    <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom" data-save="modal">@await Component.StaticText("Save")</button>&nbsp; &nbsp;
+                    <button type="button" class="btn btn-secondary m-btn m-btn--air m-btn--custom" data-dismiss="modal">@await Component.StaticText("Cancel")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

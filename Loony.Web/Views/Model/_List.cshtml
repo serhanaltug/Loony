@@ -1,0 +1,45 @@
+﻿@model ListViewModel<Loony.Data.Entities.Product.Model>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+<table class="table m-table m-table--head-separator-primary table-hover dataTable">
+    <thead>
+        <tr>
+            <table-head width="10%" sortby="ModelCode" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("ModelCode")</table-head>
+            <table-head width="10%" sortby="Year" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Year")</table-head>
+            <table-head width="10%" sortby="Season" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Season")</table-head>
+            <table-head width="20%" sortby="ModelGroup" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("ModelGroup")</table-head>
+            <table-head width="40%" sortby="ModelName" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("ModelName")</table-head>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var productmodel in Model.Data)
+        {
+        <tr>
+            <td class="align-middle">@productmodel.ModelCode.ToString().PadLeft(4,'0')</td>
+            <td class="align-middle">@productmodel.Year</td>
+            <td class="align-middle">@productmodel.Season</td>
+            <td class="align-middle">@productmodel.ModelGroup.GroupName</td>
+            <td class="align-middle">@productmodel.ModelName</td>
+            <td class="text-right align-middle">
+                @if (Convert.ToBoolean(Context.Items["Update"]))
+                {
+                    <a asp-action="Edit" asp-route-id="@productmodel.Id" class="btn btn-secondary btn-sm"><i class="la la-edit"></i> @await (Component.StaticText("Edit"))</a>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<div page-data="@Model.Page"></div>
+

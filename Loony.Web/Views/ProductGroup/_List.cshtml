@@ -1,0 +1,53 @@
+﻿@model ListViewModel<Loony.Data.Entities.Product.ProductGroup>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+<table class="table m-table m-table--head-separator-primary table-hover dataTable">
+    <thead>
+        <tr>
+            <table-head width="10%" sortby="Order" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Order")</table-head>
+            <table-head width="25%" sortby="GroupName" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("GroupName")</table-head>
+            <table-head width="55%" sortby="Description" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Description")</table-head>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <tr id="New" style="display:none; background-color: #efefef;">
+        <td colspan="4">
+            <form class="form m-form" asp-action="New" method="post">
+                @Html.AntiForgeryToken()
+                <table class="table table-borderless table-sm m-table" style="margin:0px;">
+                    <tr style="background-color: #efefef;">
+                        <td class="align-middle" style="width:10%"><input type="text" name="Order" class="form-control m-input" placeholder="Order"></td>
+                        <td class="align-middle" style="width:25%"><input type="text" name="GroupName" class="form-control m-input" placeholder="GroupName"></td>
+                        <td class="align-middle" style="width:55%"><input type="text" name="Description" class="form-control m-input" placeholder="Description"></td>
+                        <td class="text-right align-middle" style="width:10%">
+                            @if (Convert.ToBoolean(Context.Items["Create"]))
+                            {
+                                <button type="submit" class="btn btn-secondary btn-sm" title="@await Component.StaticText("Save")"><i class="la la-save"></i></button>
+                                <a asp-action="Index" class="btn btn-secondary btn-sm" title="@await Component.StaticText("Cancel")"><i class="la la-times-circle"></i></a>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+
+    @foreach (var ProductGroups in Model.Data)
+    {
+        <partial name="_Row" model="@ProductGroups" />
+    }
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<div page-data="@Model.Page"></div>

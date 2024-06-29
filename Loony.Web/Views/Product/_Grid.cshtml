@@ -1,0 +1,42 @@
+﻿@model ListViewModel<Loony.Data.Entities.Product.Product>
+
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+}
+
+<div class="col-12">
+    <div class="row recent-work">
+        @foreach (var product in Model.Data)
+        {
+            var Image = product.ProductImage.FirstOrDefault(x => x.Base);
+            var ImageId = (Image != null) ? Image.Id : 0;
+
+            @if (ImageId > 0)
+            {
+            <div class="col-md-3 col-sm-6 col-xs-12 margin-bottom-20" style="display: block; opacity: 1; ">
+                <div class="recent-work-item">
+                    @if (Convert.ToBoolean(Context.Items["Update"]))
+                    {
+                        <a asp-action="Edit" asp-route-id="@product.Id">
+                            <img id="@product.Id" class="img-responsive" src="~/Home/Image?id=@ImageId&table=Product.ProductImage" style="max-width:100%; border-style:solid; border-color:lightgray; border-width:1px;">
+                        </a>
+                    }
+                    else
+                    {
+                        <img id="@product.Id" class="img-responsive" src="~/Home/Image?id=@ImageId&table=Product.ProductImage" style="max-width:100%; border-style:solid; border-color:lightgray; border-width:1px;">
+                    }
+                    <br />
+                    <a asp-action="Edit" asp-route-id="@product.Id" class="recent-work-description" style="height:6em;">
+                        @product.ProductName - @product.ProductCode
+                    </a>
+                </div>
+            </div>
+            }
+        }
+    </div>
+</div>
+
+<div page-data="@Model.Page"></div>

@@ -1,0 +1,28 @@
+﻿@model Loony.Data.Entities.Product.ProductGroup
+
+<tr id="@String.Format("Edit_{0}", Model.Id)" style="background-color: #efefef;">
+    <td colspan="4">
+
+        <form class="m-form m-form--fit" method="post">
+
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <table class="table table-borderless table-sm m-table" style="margin:0px;">
+                <tr style="background-color: #efefef;">
+                    <td class="align-middle" style="width:10%"><input type="number" asp-for="Order" class="form-control m-input" placeholder="Order"></td>
+                    <td class="align-middle" style="width:25%"><input type="text" asp-for="GroupName" class="form-control m-input" placeholder="Group Name"></td>
+                    <td class="align-middle" style="width:55%"><input type="text" asp-for="Description" class="form-control m-input" placeholder="Description"></td>
+                    <td class="text-right align-middle" style="width:10%">
+                        @if (Convert.ToBoolean(Context.Items["Update"]))
+                        {
+                            <button type="submit" class="btn btn-secondary btn-sm btnSave"><i class="la la-save"></i></button>
+                            <a class="btn btn-secondary btn-sm btnCancel"><i class="la la-times-circle"></i></a>
+                        }
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+    </td>
+</tr>

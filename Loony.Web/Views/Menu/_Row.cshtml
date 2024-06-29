@@ -1,0 +1,22 @@
+﻿@model Loony.Data.Entities.System.Menu
+
+    <tr>
+        <td class="align-middle">@Model.Id</td>
+        <td class="text-center align-middle"><i class="@Model.Icon"></i></td>
+        <td class="align-middle">@Model.Name</td>
+        <td class="align-middle">@Model.Controller</td>
+        <td class="align-middle">@Model.RelatedId</td>
+        <td class="align-middle">@Model.Order</td>
+        <td class="text-center align-middle">@if (Model.Everyone) { <i class="fa fa-check"></i> }</td>
+        <td class="text-center align-middle">@if (Model.SuperUser) { <i class="fa fa-check"></i> }</td>
+        <td class="text-right align-middle">
+            @if (Convert.ToBoolean(Context.Items["Update"]))
+            {
+                <a id="@Model.Id" class="btn btn-secondary btn-sm btnEdit"><i class="la la-edit"></i></a>
+            }
+            @if (Convert.ToBoolean(Context.Items["Delete"]))
+            {
+                <a id="@Model.Id" class="btn btn-secondary btn-sm btnDelete"><i class="la la-trash"></i></a>
+            }
+        </td>
+    </tr>

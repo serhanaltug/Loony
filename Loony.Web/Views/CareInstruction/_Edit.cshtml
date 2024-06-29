@@ -1,0 +1,43 @@
+﻿@model Loony.Data.Entities.Product.CareInstruction
+
+<tr id="@String.Format("Edit_{0}", Model.Id)" style="background-color: #efefef;">
+    <td colspan="5">
+
+        <form class="m-form m-form--fit" enctype="multipart/form-data" method="post">
+
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <table class="table table-borderless table-sm m-table" style="margin:0px;">
+                <tr style="background-color: #efefef;">
+                    <td class="align-middle">
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" for="customFile">@await Component.StaticText("ChooseFile")</label>
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <select asp-for="Group" class="dropdown form-control kt-selectpicker">
+                            <option value="Washing / Yıkama">Washing / Yıkama</option>
+                            <option value="Bleaching / Ağartma">Bleaching / Ağartma</option>
+                            <option value="Drying / Kurutma">Drying / Kurutma</option>
+                            <option value="Wring / Sıkma">Wring / Sıkma</option>
+                            <option value="Ironing / Ütüleme">Ironing / Ütüleme</option>
+                            <option value="DryCleaning / KuruTemizleme">DryCleaning / KuruTemizleme</option>
+                        </select>
+                    </td>
+                    <td class="align-middle"><input type="text" asp-for="Name" class="form-control m-input" placeholder="Name"></td>
+                    <td class="align-middle"><input type="text" asp-for="Description" class="form-control m-input" placeholder="Description"></td>
+                    <td class="text-right align-middle">
+                        @if (Convert.ToBoolean(Context.Items["Update"]))
+                        {
+                            <button type="submit" class="btn btn-secondary btn-sm btnSave"><i class="la la-save"></i></button>
+                            <a class="btn btn-secondary btn-sm btnCancel"><i class="la la-times-circle"></i></a>
+                        }
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+    </td>
+</tr>

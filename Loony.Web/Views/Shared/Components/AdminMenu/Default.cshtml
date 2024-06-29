@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Loony.Data.Entities.System.Menu>
+
+<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-left m-dropdown--align-push" m-dropdown-toggle="click" aria-expanded="true">
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="dropdown-toggle m-dropdown__toggle btn btn-outline-metal m-btn  m-btn--icon m-btn--pill">
+        <span>
+            @await Component.StaticText("AdminPanel")
+        </span>
+    </a>
+    <div class="m-dropdown__wrapper">
+        <span class="m-dropdown__arrow m-dropdown__arrow--left m-dropdown__arrow--adjust"></span>
+        <div class="m-dropdown__inner">
+            <div class="m-dropdown__body">
+                <div class="m-dropdown__content">
+                    <ul class="m-nav">
+                        @foreach (var item in Model.Where(x => x.RelatedId == 0).OrderBy(x => x.Order))
+                        {
+                            bool hasSubMenu = false;
+
+                            if (Model.Any(x => x.RelatedId == item.Id)) hasSubMenu = true;
+
+                            if (hasSubMenu)
+                            {
+                                <li class="m-nav__item">
+                                    <div asp-controller="@item.Controller" asp-action="@item.Action" class="m-nav__link">
+                                        <i class="m-nav__link-icon @item.Icon"></i>
+                                        <span class="m-nav__link-text">
+                                            @await Component.StaticText(item.Name)
+                                        </span>
+                                    </div>
+                                    <div class="m-nav__sub">
+                                        <ul class="m-nav">
+                                            @foreach (var subitem in Model.Where(x => x.RelatedId == item.Id).OrderBy(x => x.Order))
+                                            {
+                                                <li class="m-nav__item">
+                                                    <a asp-controller="@subitem.Controller" asp-action="@subitem.Action" class="m-nav__link">
+                                                        <i class="m-nav__link-icon @subitem.Icon"></i>
+                                                        <span class="m-nav__link-text">
+                                                            @await Component.StaticText(subitem.Name)
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="m-nav__item">
+                                    <a asp-controller="@item.Controller" asp-action="@item.Action" class="m-nav__link">
+                                        <i class="m-nav__link-icon @item.Icon"></i>
+                                        <span class="m-nav__link-text">
+                                            @await Component.StaticText(item.Name)
+                                        </span>
+                                    </a>
+                                </li>
+                            }
+
+
+                        }
+
+                            <li class="m-nav__separator m-nav__separator--fit"></li>
+                            <li class="m-nav__item">
+                                <a href="/Home/ChangeLanguage?LanguageId=1&returnUrl=@Context.Request.Path" class="m-nav__link">
+                                    <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                    <span class="m-nav__link-text">
+                                        English
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="m-nav__item">
+                                <a href="/Home/ChangeLanguage?LanguageId=2&returnUrl=@Context.Request.Path" class="m-nav__link">
+                                    <i class="m-nav__link-icon flaticon-chat-2"></i>
+                                    <span class="m-nav__link-text">
+                                        Türkçe
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="m-nav__separator m-nav__separator--fit"></li>
+                            <li class="m-nav__item">
+                                <a href="" class="m-nav__link">
+                                    <i class="m-nav__link-icon flaticon-info"></i>
+                                    <span class="m-nav__link-text">
+                                        @await Component.StaticText("AboutUs")
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

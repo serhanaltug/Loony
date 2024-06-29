@@ -1,0 +1,133 @@
+﻿@model ListViewModel<Loony.Data.Entities.System.Menu>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+<table class="table m-table m-table--head-separator-primary table-hover dataTable">
+    <thead>
+        <tr>
+            <table-head width="5%" sortby="Id" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">Id</table-head>
+            <th style="width: 5%">@await Component.StaticText("Icon")</th>
+            <table-head width="20%" sortby="Name" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("MenuName")</table-head>
+            <table-head width="20%" sortby="Controller" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Controller")</table-head>
+            <table-head width="10%" sortby="RelatedId" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("RelatedId")</table-head>
+            <table-head width="10%" sortby="Order" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Order")</table-head>
+            <table-head width="10%" sortby="Everyone" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Everyone")</table-head>
+            <table-head width="10%" sortby="SuperUser" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("SuperUser")</table-head>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="New" style="display:none; background-color: #fff;">
+            <td colspan="9">
+                <form class="m-form m-form--fit m-form--label-align-right" asp-action="New" enctype="multipart/form-data" method="post">
+                    <br />
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon">
+                                        <i class="la la-edit m--font-brand"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text m--font-brand">
+                                        @await Component.StaticText("NewMenu")
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            @Html.AntiForgeryToken()
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" name="AdminMenu" value="@if (filter.Contains("true")) { <text>true</text>} else { <text>false</text> } "  />
+
+                            <div class="form-group m-form__group row">
+                                <label class="col-2 col-form-label">@await Component.StaticText("MenuName")</label>
+                                <div class="col-3">
+                                    <input type="text" name="Name" class="form-control m-input">
+                                </div>
+                                <div class="col-3">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-2 col-form-label">@await Component.StaticText("Controller")</label>
+                                <div class="col-3">
+                                    <input type="text" name="Controller" class="form-control m-input">
+                                </div>
+                                <label class="col-2 col-form-label">@await Component.StaticText("RelatedId")</label>
+                                <div class="col-1">
+                                    <input type="number" name="RelatedId" class="form-control m-input" value="0">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-2 col-form-label">@await Component.StaticText("Action")</label>
+                                <div class="col-3">
+                                    <input type="text" name="Action" class="form-control m-input">
+                                </div>
+                                <label class="col-2 col-form-label">@await Component.StaticText("LinkId")</label>
+                                <div class="col-1">
+                                    <input type="number" name="LinkId" class="form-control m-input" value="0">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-2 col-form-label">@await Component.StaticText("Icon")</label>
+                                <div class="col-3">
+                                    <select name="Icon" class="form-control m-bootstrap-select m_selectpicker" data-live-search="true">
+                                        <option value="">@await Component.StaticText("PleaseSelect")</option>
+                                        @foreach (var item in ViewBag.FlatIcons as String[])
+                                        {
+                                            <option value="@item" data-icon="@item"> @item</option>
+                                        }
+                                    </select>
+                                </div>
+                                <label class="col-2 col-form-label">@await Component.StaticText("Multi")</label>
+                                <div class="col-1">
+                                    <input type="number" name="Multi" class="form-control m-input" value="0">
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-2 col-form-label"></label>
+                                <div class="col-6">
+                                    <div class="m-checkbox-inline">
+                                        <label name="Everyone" class="m-checkbox">
+                                            <input type="checkbox" name="Everyone" value="true"> @await Component.StaticText("Everyone")
+                                            <span></span>
+                                        </label>
+                                        <label name="SuperUser" class="m-checkbox">
+                                            <input type="checkbox" name="SuperUser" value="true"> @await Component.StaticText("SuperUser")
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__foot">
+                            <div class="row">
+                                <div class="col-8 m--align-right">
+                                    @if (Convert.ToBoolean(Context.Items["Create"]))
+                                    {
+                                    <button type="submit" class="btn btn-secondary btn-md" title="@await Component.StaticText("Save")"><i class="la la-save"></i> @await Component.StaticText("Save")</button>
+                                    <a asp-action="Index" class="btn btn-secondary btn-md" title="@await Component.StaticText("Cancel")"><i class="la la-times-circle"></i>  @await Component.StaticText("Cancel")</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        @foreach (var Menus in Model.Data)
+        {
+            <partial name="_Row" model="@Menus" />
+        }
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<div page-data="@Model.Page"></div>
+<script>$('.m_selectpicker').selectpicker();</script>

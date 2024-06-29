@@ -1,0 +1,104 @@
+﻿<li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
+    <a href="#" class="m-nav__link m-dropdown__toggle">
+        <span class="m-topbar__welcome">@await Component.StaticText("Hello")&nbsp;</span>
+        <span class="m-topbar__username">
+            @User.FullName().Split(' ').First()&nbsp;
+        </span>
+        <span class="m-topbar__userpic">
+            <img src="~/Home/Avatar/@User.Id()" class="m--img-rounded m--marginless m--img-centered" />
+        </span>
+    </a>
+    <div class="m-dropdown__wrapper">
+        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+        <div class="m-dropdown__inner">
+            <div class="m-dropdown__header m--align-center" style="background: url(/img/misc/user_profile_bg.jpg); background-size: cover;">
+                <div class="m-card-user m-card-user--skin-dark">
+                    <div class="m-card-user__pic">
+                        <img src="~/Home/Avatar/@User.Id()" class="m--img-rounded m--marginless m--img-centered" />
+                    </div>
+                    <div class="m-card-user__details">
+                        @if (!String.IsNullOrEmpty(User.GetClaim("OriginId")))
+                        {<span class="m--font-weight-300">logged in as</span>}
+                        <span class="m-card-user__name m--font-weight-500">
+                            @User.FullName()
+                        </span>
+                        <a href="" class="m-card-user__email m--font-weight-300 m-link">
+                            @User.Email()
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="m-dropdown__body">
+                <div class="m-dropdown__content">
+                    <ul class="m-nav m-nav--skin-light">
+                        <li class="m-nav__section m--hide">
+                            <span class="m-nav__section-text">
+                                Section
+                            </span>
+                        </li>
+                        <li class="m-nav__item">
+                            <a asp-controller="Profile" asp-action="Index" class="m-nav__link">
+                                <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                <span class="m-nav__link-title">
+                                    <span class="m-nav__link-wrap">
+                                        <span class="m-nav__link-text">
+                                            @await Component.StaticText("MyProfile")
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="profile.html" class="m-nav__link">
+                                <i class="m-nav__link-icon flaticon-share"></i>
+                                <span class="m-nav__link-text">
+                                    @await Component.StaticText("MyActivities")
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="profile.html" class="m-nav__link">
+                                <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                <span class="m-nav__link-title">
+                                    <span class="m-nav__link-wrap">
+                                        <span class="m-nav__link-text">
+                                            @await Component.StaticText("MyMessages")
+                                        </span>
+                                        <span class="m-nav__link-badge">
+                                            <span class="m-badge m-badge--success">
+                                                2
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                        <li class="m-nav__item">
+                            <a href="profile.html" class="m-nav__link">
+                                <i class="m-nav__link-icon flaticon-info"></i>
+                                <span class="m-nav__link-text">
+                                    @await Component.StaticText("FAQ")
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__item">
+                            <a href="profile.html" class="m-nav__link">
+                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                <span class="m-nav__link-text">
+                                    @await Component.StaticText("Support")
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                        <li class="m-nav__item">
+                            <a asp-controller="Account" asp-action="Logout" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">
+                                @await Component.StaticText("Logout")
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

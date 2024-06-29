@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = await Component.StaticText("Welcome");
+}
+
+
+<div class="m-content">
+    <span>This is not inside a form, just a link.</span>
+    <a href="" data-ajax="true" data-ajax-url="@Url.Action("_AnOtherTest", "Home")" data-ajax-update="#results" data-ajax-success="toastr.info('Test returned successfully');">Test it!</a><br /><br />
+
+    <form data-ajax="true" data-ajax-mode="replace" data-ajax-update="#results" data-ajax-loading="#spinner" asp-action="_Test" asp-controller="Home" method="post" enctype="multipart/form-data">
+        <button type="submit" class="btn btn-default">Say hello</button>
+    </form>
+    <hr />
+
+    <span id="spinner" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+    <div id="results">
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-4">
+            <h4>Article</h4>
+            <form class="form-inline" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#articles" asp-action="_GetArticles" asp-controller="Home" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="article" />
+                    <button type="submit" class="btn btn-default">Search</button>
+                </div>
+            </form>
+            <hr />
+            <div id="articles"></div>
+        </div>
+        <div class="col-4">
+            <h4>Model</h4>
+        </div>
+        <div class="col-4">
+            <h4>Accessory</h4>
+        </div>
+    </div>
+
+</div>
+
+@section Styles{
+
+}
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

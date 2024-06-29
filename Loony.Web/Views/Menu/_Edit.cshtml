@@ -1,0 +1,112 @@
+﻿@model Loony.Data.Entities.System.Menu
+
+<tr id="@String.Format("Edit_{0}", Model.Id)" style="background-color: #fff;">
+    <td colspan="9">
+
+        <form class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data" method="post">
+            <br />
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <span class="m-portlet__head-icon">
+                                <i class="la la-edit m--font-brand"></i>
+                            </span>
+                            <h3 class="m-portlet__head-text m--font-brand">
+                                Id : @Model.Id - @Model.Name
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-2 col-form-label">@await Component.StaticText("MenuName")</label>
+                        <div class="col-3">
+                            <input type="text" asp-for="@Model.Name" class="form-control m-input">
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        </div>
+                        <label class="col-2 col-form-label">@await Component.StaticText("Order")</label>
+                        <div class="col-1">
+                            <input type="number" asp-for="@Model.Order" class="form-control m-input">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-2 col-form-label">@await Component.StaticText("Controller")</label>
+                        <div class="col-3">
+                            <input type="text" asp-for="@Model.Controller" class="form-control m-input">
+                        </div>
+                        <label class="col-2 col-form-label">@await Component.StaticText("RelatedId")</label>
+                        <div class="col-1">
+                            <input type="number" asp-for="@Model.RelatedId" class="form-control m-input">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-2 col-form-label">@await Component.StaticText("Action")</label>
+                        <div class="col-3">
+                            <input type="text" asp-for="@Model.Action" class="form-control m-input">
+                        </div>
+                        <label class="col-2 col-form-label">@await Component.StaticText("LinkId")</label>
+                        <div class="col-1">
+                            <input type="number" asp-for="@Model.LinkId" class="form-control m-input">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-2 col-form-label">@await Component.StaticText("Icon")</label>
+                        <div class="col-3">
+                            <select asp-for="@Model.Icon" class="form-control m-bootstrap-select m_selectpicker" data-live-search="true">
+                                <option value="">@await Component.StaticText("PleaseSelect")</option>
+                                @foreach (var item in ViewBag.FlatIcons as String[])
+                                {
+                                    if (item == Model.Icon)
+                                    {
+                                        <option value="@item" data-icon="@item" selected> @item</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item" data-icon="@item"> @item</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <label class="col-2 col-form-label">@await Component.StaticText("Multi")</label>
+                        <div class="col-1">
+                            <input type="number" asp-for="@Model.Multi" class="form-control m-input">
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-2 col-form-label"></label>
+                        <div class="col-6">
+                            <div class="m-checkbox-inline">
+                                <label asp-for="Everyone" class="m-checkbox">
+                                    <input type="checkbox" asp-for="Everyone"> @await Component.StaticText("Everyone")
+                                    <span></span>
+                                </label>
+                                <label asp-for="SuperUser" class="m-checkbox">
+                                    <input type="checkbox" asp-for="SuperUser"> @await Component.StaticText("SuperUser")
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__foot">
+                    <div class="row">
+                        <div class="col-8 m--align-right">
+                            @if (Convert.ToBoolean(Context.Items["Update"]))
+                            {
+                                <button type="submit" class="btn btn-secondary btn-md btnSave"><i class="la la-save"></i> @await Component.StaticText("SaveChanges")</button>
+                                <a class="btn btn-secondary btn-md btnCancel"><i class="la la-times-circle"></i> @await Component.StaticText("Cancel")</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </td>
+</tr>
+<script>$('.m_selectpicker').selectpicker();</script>

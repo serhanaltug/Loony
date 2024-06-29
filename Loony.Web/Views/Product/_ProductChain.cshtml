@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Loony.Data.Entities.Product.ProductChain>
+
+<div class="m-portlet__body">
+    <input type="hidden" id="ProductId" value="" />
+    <table class="table m-table m-table--head-separator-primary table-hover dataTable">
+        <thead>
+            <tr>
+                <td class="table-header">@await Component.StaticText("Models")</td>
+                <td class="table-header">@await Component.StaticText("Articles")</td>
+                <td class="table-header">@await Component.StaticText("Accessories")</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">
+                        @if(item.Model != null)
+                        { 
+                            <img src="~/Home/Thumbnail?id=@item.ModelId&table=Product.Model" class="m--marginless m--img-centered" style="max-width: 150px; border-style: solid; border-color: lightgray; border-width: 1px;" /><br />
+                            @item.Model.ModelName
+                        }
+                    </td>
+                    <td style="text-align:center">
+                        @if (item.Article != null)
+                        {
+                            <img src="~/Home/Thumbnail?id=@item.ArticleId&table=Product.Article" class="m--marginless m--img-centered" style="max-width: 150px; border-style: solid; border-color: lightgray; border-width: 1px;" /><br />
+                            @item.Article.ArticleName
+                        }
+                    </td>
+                    <td style="text-align:center">
+                        @if (item.Accessory != null)
+                        {
+                            <img src="~/Home/Thumbnail?id=@item.AccessoryId&table=Product.Accessory" class="m--marginless m--img-centered" style="max-width: 150px; border-style: solid; border-color: lightgray; border-width: 1px;" /><br />
+                            @item.Accessory.AccessoryName
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,18 @@
+﻿@model Loony.Data.Entities.System.Translation
+
+<tr>
+    <td class="align-middle">@Model.Key</td>
+    <td class="align-middle">@Model.EN</td>
+    <td class="align-middle">@Model.TR</td>
+    <td class="align-middle">@Model.Group</td>
+    <td class="text-right align-middle">
+        @if (Convert.ToBoolean(Context.Items["Update"]))
+        {
+            <a id="@Model.Id" class="btn btn-secondary btn-sm btnEdit"><i class="la la-edit"></i></a>
+        }
+        @if (Convert.ToBoolean(Context.Items["Delete"]))
+        {
+            <a id="@Model.Id" class="btn btn-secondary btn-sm btnDelete"><i class="la la-trash"></i></a>
+        }
+    </td>
+</tr>

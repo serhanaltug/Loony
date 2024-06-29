@@ -1,0 +1,115 @@
+﻿@model Loony.Data.Entities.System.User
+
+@{
+    ViewData["Title"] = await Component.StaticText("Users");
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">@await Component.StaticText("NewUser")</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a asp-controller="Home" asp-action="Index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a asp-controller="User" asp-action="Index" class="m-nav__link">
+                        <span class="m-nav__link-text">@await Component.StaticText("Users")</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div></div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet">
+                <!--begin::Form-->
+                <form class="m-form" asp-action="New">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="m-portlet__body">
+                        <div class="m-form__section m-form__section--first">
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-3 col-form-label">@await Component.StaticText("FirstName"):</label>
+                                <div class="col-lg-6">
+                                    <input type="text" asp-for="FirstName" class="form-control m-input">
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-3 col-form-label">@await Component.StaticText("LastName"):</label>
+                                <div class="col-lg-6">
+                                    <input type="text" asp-for="LastName" class="form-control m-input">
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-lg-3 col-form-label">@await Component.StaticText("Email"):</label>
+                                <div class="col-lg-6">
+                                    <input type="email" asp-for="Email" class="form-control m-input">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+                                <label class="col-3 col-form-label">@await Component.StaticText("Phone"):</label>
+                                <div class="col-6">
+                                    <input type="text" asp-for="Phone" id="kt_phone" class="form-control m-input">
+                                </div>
+                            </div>
+                            <div class="m-form__group form-group row">
+                                <label class="col-lg-3 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <div class="m-checkbox-inline">
+                                        <label class="m-checkbox">
+                                            <input type="checkbox" asp-for="IsAdmin"> @await Component.StaticText("Admin")
+                                            <span></span>
+                                        </label>
+                                        <label class="m-checkbox">
+                                            <input type="checkbox" asp-for="IsSuperUser"> @await Component.StaticText("SuperUser")
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions">
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-6">
+                                    <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">@await Component.StaticText("SaveChanges")</button>&nbsp;&nbsp;
+                                    <a asp-action="Index" class="btn btn-secondary m-btn m-btn--air m-btn--custom">@await Component.StaticText("Cancel")</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!--end::Form-->
+            </div>
+
+            <!--end::Portlet-->
+        </div>
+    </div>
+</div>
+
+@section Styles{
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript" src="/js/inputMask.js"></script>
+}

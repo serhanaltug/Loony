@@ -1,0 +1,195 @@
+﻿@model Loony.Web.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = await Component.StaticText("MyProfile");
+}
+
+<!-- BEGIN: Subheader -->
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">@await Component.StaticText("MyProfile")</h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a asp-controller="Home" asp-action="Index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+
+    @if (!String.IsNullOrEmpty(TempData["Message"]?.ToString()))
+    {
+        <message id="SaveMessage">@await Component.StaticText(TempData["Message"]?.ToString())</message>
+    }
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="m-portlet m-portlet--full-height  ">
+                <div class="m-portlet__body">
+                    <div class="m-card-profile">
+                        <div class="m-card-profile__title m--hide">
+                            @await Component.StaticText("MyProfile")
+                        </div>
+                        <div class="m-card-profile__pic">
+                            <div class="m-card-profile__pic-wrapper">
+                                <img src="~/Home/Avatar/@Model.Id" class="" />
+                            </div>
+                        </div>
+                        <div class="m-card-profile__details">
+                            <span class="m-card-profile__name">@Model.FullName</span>
+                            <a href="mailto:@Model.Email" class="m-card-profile__email m-link">@Model.Email</a>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body-separator"></div>
+                    <div class="m-widget1 m-widget1--paddingless">
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">@await Component.StaticText("Hit")</h3>
+                                    <span class="m-widget1__desc">@await Component.StaticText("MemberHasLoggedIn")</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__title">@Model.Hit</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget1__item">
+                            <div class="row m-row--no-padding align-items-center">
+                                <div class="col">
+                                    <h3 class="m-widget1__title">@await Component.StaticText("LastLoginDate")</h3>
+                                    <span class="m-widget1__desc">@await Component.StaticText("MemberLastActiveOn")</span>
+                                </div>
+                                <div class="col m--align-right">
+                                    <span class="m-widget1__title">@Model.LastLoginDate.ToShortDateString()</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                        <li class="m-nav__section m--hide">
+                            <span class="m-nav__section-text">Section</span>
+                        </li>
+                        <li class="m-nav__item">
+                            <a class="m-nav__link">
+                                <i class="m-nav__link-icon flaticon-share"></i>
+                                <span class="m-nav__link-text">@await Component.StaticText("MyActivities")</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="m-portlet m-portlet--full-height">
+                <form class="m-form m-form--fit m-form--label-align-right" asp-action="Edit" enctype="multipart/form-data" method="post">
+                    <div class="m-portlet__body">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group m-form__group m--margin-top-10 m--hide">
+                            <div class="alert m-alert m-alert--default" role="alert">
+                                The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("FirstName")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="FirstName" class="form-control m-input" placeholder="@await Component.StaticText("EnterFirstName")">
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("LastName")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="LastName" class="form-control m-input" placeholder="@await Component.StaticText("EnterLastName")">
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("Email")</label>
+                            <div class="col-7">
+                                <input type="email" asp-for="Email" class="form-control m-input" placeholder="@await Component.StaticText("EnterEmailAddress")">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("Phone")</label>
+                            <div class="col-7">
+                                <input type="text" asp-for="Phone" id="kt_phone" class="form-control m-input">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("Language")</label>
+                            <div class="col-7">
+                                <select asp-for="LanguageId" asp-items="@Model.Languages" class="form-control m-input">
+                                    <option value="">@await Component.StaticText("SelectLanguage")</option>
+                                </select>
+                                <span asp-validation-for="LanguageId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-2 col-form-label">@await Component.StaticText("ProfileImage")</label>
+                            <div class="col-7">
+                                <div class="custom-file">
+                                    <input type="file" name="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">@await Component.StaticText("ChooseFile")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-2 col-form-label">@await Component.StaticText("Password")</label>
+                        <div class="col-7">
+                            <input type="password" asp-for="Password1" class="form-control m-input" placeholder="@await Component.StaticText("EnterYourPassword")" autocomplete="new-password">
+                            <span asp-validation-for="Password1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-2 col-form-label">@await Component.StaticText("ReEnterPassword")</label>
+                        <div class="col-7">
+                            <input type="password" asp-for="Password2" class="form-control m-input" placeholder="@await Component.StaticText("EnterYourPasswordAgain")" autocomplete="off">
+                            <span asp-validation-for="Password2" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions">
+                            <div class="row">
+                                <div class="col-2">
+                                </div>
+                                <div class="col-7">
+                                    <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom">@await Component.StaticText("SaveChanges")</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @if (TempData["Message"] != null) {
+    <script>
+        $(function () {
+            setTimeout(() => {
+                $('#SaveMessage').hide();
+            }, 2000);
+        });
+    </script>
+    }
+    <script type="text/javascript" src="/js/inputMask.js"></script>
+}

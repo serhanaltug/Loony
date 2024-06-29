@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Loony.Data.Entities.Product.Article>
+
+<table class="table">
+    <tbody>
+        @foreach (var article in Model)
+        {
+        <tr>
+            <td>
+                <div class="">
+                    <img id="@article.Id" class="img-responsive" src="~/Home/Image?id=@article.Id&table=Product.Article" style="max-width:80%; border-style:solid; border-color:lightgray; border-width:1px;">
+                </div>
+                <br />
+                <div class="text-center">
+                    @article.ArticleCode - @article.ArticleName
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

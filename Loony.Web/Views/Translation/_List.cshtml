@@ -1,0 +1,67 @@
+﻿@model ListViewModel<Loony.Data.Entities.System.Translation>
+        
+@{
+    var sortDir = Model.Page.SortDirection;
+    var sortOrder = Model.Page.Order;
+    var filter = Model.Page.Filter;
+    var search = Model.Page.Search;
+ }
+
+<table class="table m-table m-table--head-separator-primary table-hover dataTable">
+    <thead>
+        <tr>
+            <table-head width="25%" sortby="Key" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Key")</table-head>
+            <table-head width="25%" sortby="EN" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("EN")</table-head>
+            <table-head width="25%" sortby="TR" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("TR")</table-head>
+            <table-head width="15%" sortby="Group" sortorder="@sortOrder" sortdir="@sortDir" filter="@filter" search="@search">@await Component.StaticText("Group")</table-head>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <tr id="New" style="display:none; background-color: #efefef;">
+        <td colspan="5">
+            <form class="form m-form" asp-action="New" method="post">
+                @Html.AntiForgeryToken()
+                <table class="table table-borderless table-sm m-table" style="margin:0px;">
+                    <tr style="background-color: #efefef;">
+                        <td class="align-middle"><input type="text" name="Key" class="form-control m-input" placeholder="Key"></td>
+                        <td class="align-middle"><input type="text" name="EN" class="form-control m-input" placeholder="EN"></td>
+                        <td class="align-middle"><input type="text" name="TR" class="form-control m-input" placeholder="TR"></td>
+                        <td class="align-middle">
+                            <select class="form-control kt-selectpicker" name="Group">
+                                <option value="">@await Component.StaticText("All")</option>
+                                <option value="Button">@await Component.StaticText("Button")</option>
+                                <option value="General">@await Component.StaticText("General")</option>
+                                <option value="Label">@await Component.StaticText("Label")</option>
+                                <option value="Link">@await Component.StaticText("Link")</option>
+                                <option value="Menu">@await Component.StaticText("Menu")</option>
+                                <option value="Message">@await Component.StaticText("Message")</option>
+                                <option value="Text">@await Component.StaticText("Text")</option>
+                                <option value="Title">@await Component.StaticText("Title")</option>
+                            </select>
+                        </td>
+                        <td class="text-right align-middle">
+                            @if (Convert.ToBoolean(Context.Items["Create"]))
+                            {
+                                <button type="submit" class="btn btn-secondary btn-sm" title="@await Component.StaticText("Save")"><i class="la la-save"></i></button>
+                                <a asp-action="Index" class="btn btn-secondary btn-sm" title="@await Component.StaticText("Cancel")"><i class="la la-times-circle"></i></a>
+                            }
+                            </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+
+    @foreach (var translation in Model.Data)
+    {
+        <partial name="_Row" model="@translation" />
+    }
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>
+
+<div page-data="@Model.Page"></div>
