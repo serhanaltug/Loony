@@ -2,8 +2,6 @@
 using Loony.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
 
 namespace Loony.Web.Filters
 {

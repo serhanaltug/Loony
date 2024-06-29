@@ -2,7 +2,6 @@
 using Loony.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Loony.Web.ViewComponents
 {

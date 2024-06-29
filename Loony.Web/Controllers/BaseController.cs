@@ -1,9 +1,7 @@
 ﻿using Loony.Data;
 using Loony.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Loony.Web.Controllers
 {

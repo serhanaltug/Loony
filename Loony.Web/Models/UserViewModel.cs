@@ -1,6 +1,4 @@
 ﻿using Loony.Data.Entities.System;
-using System;
-using System.Collections.Generic;
 
 namespace Loony.Web.Models
 {

@@ -1,5 +1,4 @@
 ﻿using Loony.Tools;
-using Microsoft.AspNetCore.Builder;
 
 namespace Loony.Web.Extensions
 {

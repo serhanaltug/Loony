@@ -1,11 +1,8 @@
 ﻿using DeviceId;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using System;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
@@ -126,8 +123,6 @@ namespace Loony.Tools
             string deviceId = new DeviceIdBuilder()
                 .AddMachineName()
                 .AddMacAddress()
-                .AddProcessorId()
-                .AddMotherboardSerialNumber()
                 .ToString();
 
             return FormatLicenseKey(GetMd5Sum(deviceId));

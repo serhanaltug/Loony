@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace Loony.Tools
+﻿namespace Loony.Tools
 {
     public class Logger
     {

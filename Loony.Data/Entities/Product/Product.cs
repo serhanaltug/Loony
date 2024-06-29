@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Loony.Data.Entities.Product
 {
@@ -14,7 +12,7 @@ namespace Loony.Data.Entities.Product
         public string Season { get; set; }
         public int ProductGroupId { get; set; }
         public virtual ProductGroup ProductGroup { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? CreationDate { get; set; }

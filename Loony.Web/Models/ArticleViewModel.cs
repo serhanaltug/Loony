@@ -1,6 +1,5 @@
 ﻿using Loony.Data.Entities.Product;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 
 namespace Loony.Web.Models
 {

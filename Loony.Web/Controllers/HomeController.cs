@@ -5,16 +5,10 @@ using Loony.Web.Filters;
 using Loony.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using System;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Loony.Web.Controllers
 {
@@ -51,7 +45,7 @@ namespace Loony.Web.Controllers
 
         public IActionResult _GetArticles(string article)
         {
-            if(article.Length > 0)
+            if (article.Length > 0)
             {
                 var data = db.Articles.Where(x => x.ArticleName.ToLower().Contains(article.ToLower())).ToList();
                 return PartialView(data);

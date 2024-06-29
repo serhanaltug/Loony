@@ -18,7 +18,7 @@ namespace Loony.Data.Entities.System
         [Required(ErrorMessage = "Required field")]
         public int Type { get; set; } = 1;
 
-        public string Group { get; set; }
+        public string? Group { get; set; }
 
     }
 

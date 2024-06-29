@@ -20,7 +20,7 @@ namespace Loony.Data
         public DbSet<Menu_User> Menu_User { get; set; }
 
         public DbSet<FileGroup> FileGroups { get; set; }
-        public DbSet<File> Files { get; set; }
+        public DbSet<Entities.System.File> Files { get; set; }
         public DbSet<File_Tag> File_Tag { get; set; }
         #endregion
 

@@ -3,17 +3,11 @@ using Loony.Tools;
 using Loony.Web.Extensions;
 using Loony.Web.Filters;
 using Loony.Web.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Loony.Web.Controllers
@@ -306,22 +300,22 @@ namespace Loony.Web.Controllers
                         MIMEType = file.ContentType,
                         FileContent = ms.ToArray(),
                         RelatedTable = "User",
-                        RelatedGuid = id, 
-                        CreationDate = DateTime.UtcNow, 
+                        RelatedGuid = id,
+                        CreationDate = DateTime.UtcNow,
                         CreatedBy = User.Id()
                     };
 
                     db.Files.Add(entity);
                     await db.SaveChangesAsync();
-            
-                } 
+
+                }
             }
 
             var isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
             if (isAjax)
             {
                 var model = db.Files.Where(x => x.RelatedTable == "User" && x.RelatedGuid == id).ToList();
-                return PartialView("_Files", model);            
+                return PartialView("_Files", model);
             }
 
             var url = Url.Action(nameof(Edit), new { id = id }) + "#files";

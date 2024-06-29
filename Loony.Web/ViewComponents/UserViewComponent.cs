@@ -1,7 +1,5 @@
 ﻿using Loony.Data;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
 
 namespace Loony.Web.ViewComponents
 {

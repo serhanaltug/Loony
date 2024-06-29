@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Loony.Data.Entities.System
@@ -23,12 +21,12 @@ namespace Loony.Data.Entities.System
         [DataType(DataType.Password), StringLength(20, MinimumLength = 4)]
         //[Required(ErrorMessage = "Required field")]
         public string Password { get; set; }
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
         public int Hit { get; set; }
         public DateTime LastLoginDate { get; set; }
-        public string LastLoginIP { get; set; }
-        public string Description { get; set; }
-        public byte[] Avatar { get; set; }
+        public string? LastLoginIP { get; set; }
+        public string? Description { get; set; }
+        public byte[]? Avatar { get; set; }
 
         public int LanguageId { get; set; }
         [ForeignKey("LanguageId")]

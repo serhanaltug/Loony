@@ -1,5 +1,4 @@
 ﻿using Loony.Data.Entities.System;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Loony.Web.Models
